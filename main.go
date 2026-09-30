@@ -26,7 +26,7 @@ func main() {
 	commands := commands.NewCommands()
 	OSArgs := os.Args
 	if len(OSArgs) < 2 {
-		errPanic(fmt.Errorf("number of expected arguments '%d' is less than the given '%d'", 2, len(OSArgs)))
+		errPanic(fmt.Errorf("number of expected arguments '%d' is less than the given '%d'", 1, len(OSArgs)-1))
 	}
 	args := arguments.NewArgument(OSArgs)
 	err = commands.Run(state, args)

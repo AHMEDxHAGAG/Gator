@@ -6,11 +6,16 @@ type Arguments struct {
 	Args []string
 }
 
+const (
+	namePos = 0
+	argPos  = 1
+)
+
 func NewArgument(args []string) Arguments {
-	name := args[0]
+	name := args[namePos]
 	var arguments []string = nil
-	if len(args) > 1 {
-		arguments = args[1:]
+	if len(args) > argPos {
+		arguments = args[argPos:]
 	}
 	return Arguments{
 		Name: name,

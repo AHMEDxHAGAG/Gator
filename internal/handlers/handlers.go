@@ -19,7 +19,7 @@ func HandlerLogin(s *state.State, cmd arguments.Arguments) error {
 	if len(cmd.Args) < expected {
 		return fmt.Errorf("wrong number of arguments, expected: %d, found: %d", expected, len(cmd.Args))
 	}
-	userName := strings.Join(cmd.Args[:], " ")
+	userName := strings.Join(cmd.Args, " ")
 	if err := s.Conf.SetUser(userName); err != nil {
 		return err
 	}

@@ -17,6 +17,11 @@ func errPanic(err error) {
 	}
 }
 
+const (
+	garbageArgOffset = 1
+	minNumOfArgs     = 2
+)
+
 func main() {
 	conf, err := config.Read()
 	errPanic(err)
@@ -25,10 +30,10 @@ func main() {
 	}
 	commands := commands.NewCommands()
 	OSArgs := os.Args
-	if len(OSArgs) < 2 {
+	if len(OSArgs) < minNumOfArgs {
 		errPanic(fmt.Errorf("number of expected arguments '%d' is less than the given '%d'", 1, len(OSArgs)-1))
 	}
-	args := arguments.NewArgument(OSArgs[1:])
+	args := arguments.NewArgument(OSArgs[garbageArgOffset:])
 	err = commands.Run(state, args)
 	errPanic(err)
 }

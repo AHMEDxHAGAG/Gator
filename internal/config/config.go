@@ -3,6 +3,7 @@ package config
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 )
 
@@ -19,6 +20,10 @@ func Read() (Config, error) {
 		return Config{}, err
 	}
 	data, err := os.ReadFile(path)
+	if errors.Is(err, os.ErrNotExist) {
+		return notFoundConfigFileHandler()
+	}
+
 	if err != nil {
 		return Config{}, err
 	}
@@ -35,11 +40,7 @@ func (conf *Config) SetUser(userName string) error {
 	if err != nil {
 		return err
 	}
-	path, err := getConfPath()
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(path, data, 0o777); err != nil {
+	if err = writeOnConfig(data); err != nil {
 		return err
 	}
 	return nil
@@ -51,4 +52,29 @@ func getConfPath() (string, error) {
 		return "", err
 	}
 	return homePath + "/" + configPath, nil
+}
+
+func writeOnConfig(data []byte) error {
+	path, err := getConfPath()
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile(path, data, 0o755); err != nil {
+		return err
+	}
+	return nil
+}
+
+func notFoundConfigFileHandler() (Config, error) {
+	conf := Config{
+		DBURL: "postgres://configure_it",
+	}
+	data, err := json.Marshal(conf)
+	if err != nil {
+		return Config{}, err
+	}
+	if err = writeOnConfig(data); err != nil {
+		return Config{}, err
+	}
+	return conf, nil
 }

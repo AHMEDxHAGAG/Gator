@@ -1,3 +1,3 @@
-module github.com/AHMEDxHAGAG/RSSaggregator
+module github.com/AHMEDxHAGAG/Gator
 
 go 1.27.1

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/arguments"
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/state"
+	"github.com/AHMEDxHAGAG/Gator/internal/arguments"
+	"github.com/AHMEDxHAGAG/Gator/internal/state"
 )
 
 type (
@@ -15,8 +15,9 @@ type (
 )
 
 func HandlerLogin(s *state.State, cmd arguments.Arguments) error {
-	if len(cmd.Args) == 0 {
-		return fmt.Errorf("wrong number of arguments, expected: %d, found: %d", 1, len(cmd.Args))
+	const expected = 1
+	if len(cmd.Args) < expected {
+		return fmt.Errorf("wrong number of arguments, expected: %d, found: %d", expected, len(cmd.Args))
 	}
 	userName := strings.Join(cmd.Args[:], " ")
 	if err := s.Conf.SetUser(userName); err != nil {

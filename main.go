@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/arguments"
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/commands"
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/config"
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/state"
+	"github.com/AHMEDxHAGAG/Gator/internal/arguments"
+	"github.com/AHMEDxHAGAG/Gator/internal/commands"
+	"github.com/AHMEDxHAGAG/Gator/internal/config"
+	"github.com/AHMEDxHAGAG/Gator/internal/state"
 )
 
 func errPanic(err error) {
@@ -28,7 +28,7 @@ func main() {
 	if len(OSArgs) < 2 {
 		errPanic(fmt.Errorf("number of expected arguments '%d' is less than the given '%d'", 1, len(OSArgs)-1))
 	}
-	args := arguments.NewArgument(OSArgs)
+	args := arguments.NewArgument(OSArgs[1:])
 	err = commands.Run(state, args)
 	errPanic(err)
 }

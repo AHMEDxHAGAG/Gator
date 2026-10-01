@@ -7,8 +7,13 @@ type Arguments struct {
 }
 
 func NewArgument(args []string) Arguments {
+	name := args[0]
+	var arguments []string = nil
+	if len(args) > 1 {
+		arguments = args[1:]
+	}
 	return Arguments{
-		Name: args[0],
-		Args: args[1:],
+		Name: name,
+		Args: arguments,
 	}
 }

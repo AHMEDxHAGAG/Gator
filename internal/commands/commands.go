@@ -3,9 +3,9 @@ package commands
 import (
 	"fmt"
 
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/arguments"
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/handlers"
-	"github.com/AHMEDxHAGAG/RSSaggregator/internal/state"
+	"github.com/AHMEDxHAGAG/Gator/internal/arguments"
+	"github.com/AHMEDxHAGAG/Gator/internal/handlers"
+	"github.com/AHMEDxHAGAG/Gator/internal/state"
 )
 
 type Commands struct {
@@ -13,11 +13,10 @@ type Commands struct {
 }
 
 func (c *Commands) Run(s *state.State, cmd arguments.Arguments) error {
-	f, ok := c.Handlers[cmd.Args[0]]
+	f, ok := c.Handlers[cmd.Name]
 	if !ok {
-		return fmt.Errorf("command %s isnt found", cmd.Args[0])
+		return fmt.Errorf("command %s isnt found", cmd.Name)
 	}
-	cmd.Args = cmd.Args[1:]
 	if err := f(s, cmd); err != nil {
 		return err
 	}

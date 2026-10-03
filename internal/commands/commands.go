@@ -29,6 +29,7 @@ func (c *Commands) register(name string, f handlers.HandlerFunc) {
 
 func (c *Commands) GetDefaultHandlers() {
 	c.register("login", handlers.HandlerLogin)
+	c.register("register", handlers.HandlerRegister)
 }
 
 func NewCommands() *Commands {

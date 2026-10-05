@@ -34,6 +34,14 @@ func Read() (Config, error) {
 	return conf, nil
 }
 
+func GetCurrUser() (string, error) {
+	conf, err := Read()
+	if err != nil {
+		return "", err
+	}
+	return conf.CurrentUserName, nil
+}
+
 func (conf *Config) SetUser(userName string) error {
 	conf.CurrentUserName = userName
 	data, err := json.Marshal(conf)

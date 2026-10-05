@@ -55,10 +55,22 @@ func HandlerRegister(s *state.State, cmd arguments.Arguments) error {
 	if err := s.Conf.SetUser(user.Name); err != nil {
 		return err
 	}
-	fmt.Printf(
-		`	user %s was created
-			- ID: %s
-			- CreatedAt: %s
-		`, user.Name, user.ID, user.CreatedAt)
+	return printUser(user)
+}
+
+func HandlerReset(s *state.State, cmd arguments.Arguments) error {
+	return s.DB.Reset(context.Background())
+}
+
+func HandlerGetUsers(s *state.State, cmd arguments.Arguments) error {
+	users, err := s.DB.GetUsers(context.Background())
+	if err != nil {
+		return err
+	}
+	for _, user := range users {
+		if err := printUser(user); err != nil {
+			return err
+		}
+	}
 	return nil
 }

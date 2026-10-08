@@ -28,8 +28,7 @@ const (
 func main() {
 	conf, err := config.Read()
 	errPanic(err)
-	dbURL := conf.DBURL
-	db, err := sql.Open("postgres", dbURL)
+	db, err := sql.Open("postgres", conf.DBURL)
 	errPanic(err)
 	dbQ := database.New(db)
 	st := state.NewState(&conf, dbQ)

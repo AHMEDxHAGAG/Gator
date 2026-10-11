@@ -1,8 +1,10 @@
+// Package rss
 package rss
 
 import (
 	"context"
 	"encoding/xml"
+	"html"
 	"net/http"
 )
 
@@ -39,5 +41,15 @@ func FetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
 	if err := xml.NewDecoder(res.Body).Decode(rss); err != nil {
 		return nil, err
 	}
+	unEscapeHTMLStringForRSS(rss)
 	return rss, nil
+}
+
+func unEscapeHTMLStringForRSS(rss *RSSFeed) {
+	rss.Channel.Title = html.UnescapeString(rss.Channel.Title)
+	rss.Channel.Description = html.UnescapeString(rss.Channel.Description)
+	for i, val := range rss.Channel.Item {
+		rss.Channel.Item[i].Title = html.UnescapeString(val.Title)
+		rss.Channel.Item[i].Description = html.UnescapeString(val.Description)
+	}
 }

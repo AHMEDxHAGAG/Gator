@@ -10,6 +10,7 @@ import (
 
 	"github.com/AHMEDxHAGAG/Gator/internal/arguments"
 	"github.com/AHMEDxHAGAG/Gator/internal/database"
+	"github.com/AHMEDxHAGAG/Gator/internal/rss"
 	"github.com/AHMEDxHAGAG/Gator/internal/state"
 )
 
@@ -71,6 +72,20 @@ func HandlerGetUsers(s *state.State, cmd arguments.Arguments) error {
 		if err := printUser(user); err != nil {
 			return err
 		}
+	}
+	return nil
+}
+
+func HandlerAggregate(s *state.State, cmd arguments.Arguments) error {
+	rss, err := rss.FetchFeed(context.Background(), "https://www.wagslane.dev/index.xml")
+	if err != nil {
+		return err
+	}
+	fmt.Printf("- %s\n", rss.Channel.Title)
+	fmt.Printf("  %s\n", rss.Channel.Description)
+	for _, val := range rss.Channel.Item {
+		fmt.Printf("\t* %s\n", val.Title)
+		fmt.Printf("\t  %s\n", val.Description)
 	}
 	return nil
 }

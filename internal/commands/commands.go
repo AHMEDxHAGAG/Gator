@@ -33,6 +33,7 @@ func (c *Commands) GetDefaultHandlers() {
 	c.register("reset", handlers.HandlerReset)
 	c.register("users", handlers.HandlerGetUsers)
 	c.register("agg", handlers.HandlerAggregate)
+	c.register("addfeed", handlers.HandlerAddFeed)
 }
 
 func NewCommands() *Commands {

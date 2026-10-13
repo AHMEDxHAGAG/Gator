@@ -89,3 +89,29 @@ func HandlerAggregate(s *state.State, cmd arguments.Arguments) error {
 	}
 	return nil
 }
+func HandlerAddFeed(s *state.State, cmd arguments.Arguments) error {
+	const expected = 2
+	if len(cmd.Args) != expected {
+		return fmt.Errorf("wrong number of arguments, expected: %d, found: %d", expected, len(cmd.Args))
+	}
+	feedName, feedUrl := cmd.Args[0], cmd.Args[1]
+	id := uuid.New()
+	created_at, updated_at := time.Now(), time.Now()
+	user, err := s.DB.GetUser(context.Background(), s.Conf.CurrentUserName)
+	if err != nil {
+		return err
+	}
+	feed, err := s.DB.CreateFeed(context.Background(),
+		database.CreateFeedParams{
+			ID:        id.String(),
+			CreatedAt: created_at,
+			UpdatedAt: updated_at,
+			Name:      feedName,
+			Url:       feedUrl,
+			UserID:    user.ID,
+		})
+	if err != nil {
+		return err
+	}
+	return printFeed(feed)
+}

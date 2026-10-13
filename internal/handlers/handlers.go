@@ -115,3 +115,21 @@ func HandlerAddFeed(s *state.State, cmd arguments.Arguments) error {
 	}
 	return printFeed(feed)
 }
+
+func HandlerListFeeds(s *state.State, cmd arguments.Arguments) error {
+	users, err := s.DB.GetUsers(context.Background())
+	if err != nil {
+		return err
+	}
+	for _, user := range users {
+		feeds, err := s.DB.GetFeeds(context.Background(), user.ID)
+		if err != nil {
+			return err
+		}
+		for _, feed := range feeds {
+			printFeed(feed)
+			fmt.Printf("\t- username: %s\n", user.Name)
+		}
+	}
+	return nil
+}

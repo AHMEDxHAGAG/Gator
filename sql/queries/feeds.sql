@@ -9,3 +9,7 @@ VALUES(
     $6
 )
 RETURNING *;
+
+-- name: GetFeeds :many
+SELECT * FROM feeds
+where user_id = $1;

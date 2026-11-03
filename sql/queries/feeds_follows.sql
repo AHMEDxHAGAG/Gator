@@ -6,10 +6,14 @@ INSERT INTO feed_follows (
   )
 RETURNING 
   *,
-  (select name as user_name from users where users.id = $4),
-  (select name as feed_name from feeds where feeds.id = $5)
+  (select name from users where users.id = $4) as user_name ,
+  (select name from feeds where feeds.id = $5) as feed_name
 ;
 
 -- name: GetFeedFollowsForUser :many
 SELECT * FROM feed_follows
 where user_id = $1;
+
+
+-- name: ResetFeedFollows :exec
+DELETE FROM feed_follows;

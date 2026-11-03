@@ -18,8 +18,8 @@ INSERT INTO feed_follows (
   )
 RETURNING 
   id, created_at, updated_at, user_id, feed_id,
-  (select name as user_name from users where users.id = $4),
-  (select name as feed_name from feeds where feeds.id = $5)
+  (select name from users where users.id = $4) as user_name ,
+  (select name from feeds where feeds.id = $5) as feed_name
 `
 
 type CreateFeedFollowParams struct {
@@ -93,4 +93,13 @@ func (q *Queries) GetFeedFollowsForUser(ctx context.Context, userID string) ([]F
 		return nil, err
 	}
 	return items, nil
+}
+
+const resetFeedFollows = `-- name: ResetFeedFollows :exec
+DELETE FROM feed_follows
+`
+
+func (q *Queries) ResetFeedFollows(ctx context.Context) error {
+	_, err := q.db.ExecContext(ctx, resetFeedFollows)
+	return err
 }

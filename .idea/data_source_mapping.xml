@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/sql/queries/feeds.sql" value="7d6cc922-4b8b-4fbc-824d-7425d930413e" />
+    <file url="file://$PROJECT_DIR$/sql/queries/feeds_follows.sql" value="7d6cc922-4b8b-4fbc-824d-7425d930413e" />
+    <file url="file://$PROJECT_DIR$/sql/queries/users.sql" value="7d6cc922-4b8b-4fbc-824d-7425d930413e" />
+    <file url="file://$PROJECT_DIR$/sql/schema/001_users.sql" value="7d6cc922-4b8b-4fbc-824d-7425d930413e" />
+    <file url="file://$PROJECT_DIR$/sql/schema/002_feeds.sql" value="7d6cc922-4b8b-4fbc-824d-7425d930413e" />
+    <file url="file://$PROJECT_DIR$/sql/schema/003_feed_follows.sql" value="7d6cc922-4b8b-4fbc-824d-7425d930413e" />
+  </component>
+</project>

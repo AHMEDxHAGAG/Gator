@@ -9,5 +9,14 @@ import (
 )
 
 func HandlerReset(s *state.State, cmd arguments.Arguments) error {
-	return s.DB.Reset(context.Background())
+	if err := s.DB.ResetUsers(context.Background()); err != nil {
+		return err
+	}
+	if err := s.DB.ResetFeeds(context.Background()); err != nil {
+		return err
+	}
+	if err := s.DB.ResetFeedFollows(context.Background()); err != nil {
+		return err
+	}
+	return nil
 }
